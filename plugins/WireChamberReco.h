@@ -26,6 +26,8 @@ private:
     int              chXr_;
     int              chYu_;
     int              chYd_;
+    float            tMin_;
+    float            tMax_;
 };
 
 DEFINE_PLUGIN(WireChamberReco);

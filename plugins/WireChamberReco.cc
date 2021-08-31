@@ -10,6 +10,9 @@ bool WireChamberReco::Begin(map<string, PluginBase*>& plugins, CfgManager& opts,
     chYu_ = opts.GetOpt<int>(instanceName_+".chYup");
     chYd_ = opts.GetOpt<int>(instanceName_+".chYdown");
     
+    tMin_ = opts.GetOpt<float>(instanceName_+".tMin");
+    tMax_ = opts.GetOpt<float>(instanceName_+".tMax");
+
     //---create a position tree
     bool storeTree = opts.OptExist(instanceName_+".storeTree") ?
         opts.GetOpt<bool>(instanceName_+".storeTree") : true;
@@ -27,6 +30,8 @@ bool WireChamberReco::ProcessEvent(H4Tree& h4Tree, map<string, PluginBase*>& plu
     vector<float> timeL, timeR, timeU, timeD;
     for(unsigned int iCh=0; iCh<h4Tree.nTdcChannels; ++iCh)
     {
+        if (h4Tree.tdcData[iCh]<tMin_ || h4Tree.tdcData[iCh]>tMax_)
+            continue;
         if(int(h4Tree.tdcChannel[iCh])==chXl_)
             timeL.push_back(h4Tree.tdcData[iCh]);
         if(int(h4Tree.tdcChannel[iCh])==chXr_)
