@@ -201,6 +201,7 @@ int main(int argc, char* argv[])
     data->Write();
     inputTOFHIR->Close();
     // outROOT->Close();
+    std::cout << "TOFHIR reco file updated and closed" << std::endl;
     exit(0);
 }    
 
