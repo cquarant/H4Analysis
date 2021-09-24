@@ -143,6 +143,11 @@ int main(int argc, char* argv[])
 		h4->GetEntry(iEventH4DAQ+searchIndex);
 		searchIndex++;
 	      }
+	    else
+	      {
+		std::cout << "Spill not found  " << spill << std::endl;
+		goto theEnd;
+	      }
 
 	    //skip events not in this spill
 	    if (spill!=spillH4DAQ)
@@ -150,7 +155,10 @@ int main(int argc, char* argv[])
 
 	    //spillFound
 	    if (!spillFound)
-	      spillFound=true;
+	      {
+		std::cout << "Spill found " << spill << std::endl;
+		spillFound=true;
+	      }
 
 	    //first event in spill
 	    if (firstTriggerTimeH4DAQ==0)
@@ -184,6 +192,7 @@ int main(int argc, char* argv[])
 	
       }
 
+ theEnd:
     //---close
     // outROOT->cd();
     inputTOFHIR->cd();
