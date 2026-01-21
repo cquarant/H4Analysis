@@ -21,12 +21,12 @@
      that are read sequentially before the current one so that blocks/keys that
      are present in more that one file are overwritten.
 ** The H4Reco dumper for BTL TB Sep 2025
-If necessary, check the 'outNameSuffix' and 'path2data' paths in the `cfg/MTD_H8_Sep2025/MTD_H8_202509.cfg`
-Run following command, changing `<start>`, `<end>`, and `<run_number>` accordingly to the spills and run number you want to process:
-```
-cd H4Analysis
-for spill in {<start>...<end>}; do /afs/cern.ch/user/m/mtd/H4Analysis/bin/H4Reco /afs/cern.ch/user/m/mtd/H4Analysis/cfg/MTD_H8_Sep2025/MTD_H8_202509.cfg <run_number> ${spill}; done
-```
+ - If necessary, check the =outNameSuffix= and =path2data= paths in =cfg/MTD_H8_Sep2025/MTD_H8_202509.cfg=.
+ - Run following command, changing =<start>=, =<end>=, and =<run_number>= accordingly to the spills and run number you want to process:
+
+=cd H4Analysis=
+=for spill in {<start>...<end>}; do /afs/cern.ch/user/m/mtd/H4Analysis/bin/H4Reco /afs/cern.ch/user/m/mtd/H4Analysis/cfg/MTD_H8_Sep2025/MTD_H8_202509.cfg <run_number> ${spill}; done=
+
 ** The H4Reco dumper
    - The main executable.
    - The idea is to run multiple plugins, each dedicated to a specific task, i.e. reconstructing hodoscope hits, digitizer waveform.
