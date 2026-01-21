@@ -79,10 +79,11 @@ bool CalibDigitizer::BeginLoop(int iLoop, map<string, PluginBase*>& plugins, Cfg
     thisFit_ = 0;
 
     fitters_.clear();
+    fitters_.reserve(nTotSamples_);
     for (int i = 0;i<nTotSamples_;++i)
     {
-        fitters_.push_back(TLinearFitter(4)); //using a linear fitter with 3 parameters for each cell i % DeltaV_i + DeltaT_i*Derivative + + SlopeV_i*Sample + QuadraticV_i*sample*sample %
-        fitters_[i].SetFormula("hyp3"); 
+        fitters_.push_back(std::make_unique<TLinearFitter>(4)); //using a linear fitter with 3 parameters for each cell i % DeltaV_i + DeltaT_i*Derivative + + SlopeV_i*Sample + QuadraticV_i*sample*sample %
+        fitters_[i]->SetFormula("hyp3"); 
     }
   
     return true;
@@ -167,7 +168,7 @@ bool CalibDigitizer::ProcessEvent(H4Tree& h4Tree, map<string, PluginBase*>& plug
             x[2] = x[1]*x[1];
             double residual = wFit->Eval((*times)[iSample])-(*samples)[iSample];
             int cellIndex = (iSample + WFs_[channel]->GetStartIndexCell())%samples->size();
-            fitters_[offset+cellIndex].AddPoint(x,residual);
+            fitters_[offset+cellIndex]->AddPoint(x,residual);
         }	
 
         //---Fill calibTree
@@ -189,15 +190,15 @@ void CalibDigitizer::minimize()
     for (int i = 0;i<nTotSamples_;++i)
     {
         if (!fitDeltaV_)
-            fitters_[i].FixParameter(0,0.);
+            fitters_[i]->FixParameter(0,0.);
         if (!fitDeltaT_)
-            fitters_[i].FixParameter(1,0.);
+            fitters_[i]->FixParameter(1,0.);
         if (!fitSlopeV_)
-            fitters_[i].FixParameter(2,0.);
+            fitters_[i]->FixParameter(2,0.);
         if (!fitQuadraticV_)
-            fitters_[i].FixParameter(3,0.);
+            fitters_[i]->FixParameter(3,0.);
 
-        fitters_[i].Eval();
+        fitters_[i]->Eval();
     }
     //clock_t end = clock();
 }
@@ -217,7 +218,7 @@ bool CalibDigitizer::EndLoop(int iLoop, map<string, PluginBase*>& plugins, CfgMa
         {
             TVectorD params;
 
-            fitters_[offset+iSample].GetParameters(params);
+            fitters_[offset+iSample]->GetParameters(params);
             // TVectorD errors;
             // fitters_[iSample].GetErrors(errors);
             digiCalibration_[channelID][iSample].deltaV += params(0);

@@ -6,6 +6,7 @@
 #include "interface/CalibDigiTree.h"
 #include "TLinearFitter.h"
 #include "TGraph.h"
+#include <memory>
 
 using namespace std;
 
@@ -44,7 +45,7 @@ private:
     string                functionType_;
 
     map<string, WFClass*> WFs_;
-    vector<TLinearFitter> fitters_;
+    vector<std::unique_ptr<TLinearFitter>> fitters_;
     
     DigitizerCalibration  digiCalibration_;
     CalibDigiTree*        calibTree_;
