@@ -21,7 +21,7 @@
      that are read sequentially before the current one so that blocks/keys that
      are present in more that one file are overwritten.
 ** The H4Reco dumper for BTL TB Sep 2025
-If necessary, check the `outNameSuffix` and `path2data` paths in the `cfg/MTD_H8_Sep2025/MTD_H8_202509.cfg`
+If necessary, check the 'outNameSuffix' and 'path2data' paths in the `cfg/MTD_H8_Sep2025/MTD_H8_202509.cfg`
 Run following command, changing `<start>`, `<end>`, and `<run_number>` accordingly to the spills and run number you want to process:
 ```
 cd H4Analysis
