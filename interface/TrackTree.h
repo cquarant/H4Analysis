@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <cmath>
 
 #include "TFile.h"
 #include "TTree.h"
@@ -24,7 +25,7 @@ public:
     double alpha() { return  value[2]; }
     double beta() { return  value[3]; }
 
-    double err_x() { return  sqrt(covariance[0]); }
+    double err_x() { return  std::sqrt(covariance[0]); }
     double err_y() { return  sqrt(covariance[2]); }
     double err_alpha() { return  sqrt(covariance[5]); }
     double err_beta() { return  sqrt(covariance[9]); }

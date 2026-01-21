@@ -1,6 +1,8 @@
 #ifndef __ASYNC_DATA_PROCESSOR__
 #define __ASYNC_DATA_PROCESSOR__
 
+#include <cmath>
+
 #include "TFile.h"
 #include "TTreeFormula.h"
 
